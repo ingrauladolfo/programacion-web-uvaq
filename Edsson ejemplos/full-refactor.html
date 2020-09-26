@@ -1,0 +1,110 @@
+<html>
+	<head>
+		<style>
+			.hidden {
+				display:none;
+			}
+			p {
+				margin: 4 0;
+			}
+			.error {
+				color: red;
+				font-size: 10px;
+			}
+		</style>	
+		<script
+		src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+		crossorigin="anonymous"></script>
+		
+		<script>
+			$( document ).ready(function() {     
+				
+				var nombre,apellido;
+				$("#nombre").blur(function()
+				{
+					nombre = $(this).val();
+					checkVacio($(this),"Nombre");
+					//checkNombre();
+				});
+
+				$("#apellido").blur(function()
+				{
+					apellido = $(this).val();
+					checkVacio($(this),"Apellido");
+					//checkNombre();
+				});				
+				$("#formulario").submit(function(){
+					if(checkNombre())
+					{
+						$("#summary").html("<li>Nombre: "+nombre+"</li>");
+						$("#summary").show();
+					}							
+					else
+						alert("VALES NEPE");
+					return false;
+
+					
+				});
+				
+				function checkNombre()
+				{
+					nombre = $("#nombre").val();
+					if(nombre == "")
+					{
+						$("#error").html("Nombre no puede ser vacio");
+						$("#error").show();
+					}
+					else if(nombre.length < 3)
+					{
+						$("#error").html("Nombre tiene que ser mayor a 10 charcthers");
+						$("#error").show();		
+										
+
+					}
+					else
+					{
+						$("#error").hide();
+						return true;
+					}
+					return false;
+
+				}
+
+				function checkVacio(element,wildcard)
+				{
+					elementVal = element.val();
+					console.log(elementVal);
+					if(elementVal == "")
+					{
+						nextElement = element.next();
+						nextElement.html(wildcard+" No puede ser vacio");
+						nextElement.show();						
+						return false;
+
+					}
+					return true;
+
+				}
+
+			});
+		</script>	
+		
+				
+	</head>
+	<body>
+		<form id="formulario">
+			<p>nombre</p>
+			<input id="nombre" type="text" placeholder="nombre"/>
+			<p class="hidden error" ></p>
+
+			<input id="apellido" type="text" placeholder="apellido"/>
+			<p class="hidden error" ></p>
+			
+			<p><br/><input type="submit" value="Submit"></p>
+		</form>
+		<h1>SUMMARY</h1>
+			<ul id="summary">
+			</ul>
+	</body>		
+</html>
