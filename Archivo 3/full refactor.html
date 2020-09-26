@@ -1,0 +1,59 @@
+<html>
+	<head>
+		<style>
+			.hidden {
+				display:none;
+			}
+			p {
+				margin: 4 0;
+			}
+			.error {
+				color: red;
+				font-size: 10px;
+			}
+		</style>	
+		<script
+		src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+		crossorigin="anonymous"></script>
+		
+		<script>
+			$( document ).ready(function() {     
+    $("#usuarios").click(function(){
+        usersTable = "";
+
+        var settings = {
+          "url": "https://mediomaraton.uvaq.edu.mx:3000/usuario/",
+          "method": "GET",
+        }
+        $.ajax(settings).done(function (response) {
+          console.log(response);
+          console.log(response["usuarios"][0]["correo"]);
+          
+          response["usuarios"].forEach(function(usuario){
+            console.log(usuario);
+            usersTable += `
+            <tr>
+                <td>${usuario["correo"]}</td>
+                <td>${usuario["nombre"]}</td>
+                <td>${usuario["genero"]}</td>
+
+            </tr>`;
+                                      
+          });
+          $("#todoslosusuarios").html(usersTable);
+        });		
+    });
+
+
+});
+		</script>	
+		
+				
+	</head>
+	<body>
+		<p> Da Click aqui para obtener todos los usuarios </p>
+		<button id="usuarios">Usuarios</button>
+		<table border=1 id="todoslosusuarios"></table>
+	</body>		
+</html>
